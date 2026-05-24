@@ -1,3 +1,4 @@
+use adk_mcp_sdk::{HealthCheck, HealthStatus};
 use crate::store::{ActorContext, Audience, KbStore};
 use rmcp::{handler::server::wrapper::Parameters, schemars, tool, tool_router};
 use serde::Deserialize;
@@ -108,5 +109,16 @@ impl KbServer {
     fn get_article_gaps(&self, Parameters(i): Parameters<GetGapsInput>) -> String {
         let gaps = self.store.get_gaps(i.limit.unwrap_or(10));
         serde_json::to_string_pretty(&serde_json::json!({"count": gaps.len(), "gaps": gaps})).unwrap()
+    }
+}
+
+#[async_trait::async_trait]
+impl HealthCheck for KbServer {
+    async fn check_health(&self) -> HealthStatus {
+        HealthStatus {
+            healthy: true,
+            message: Some("operational".into()),
+            latency_ms: Some(1),
+        }
     }
 }

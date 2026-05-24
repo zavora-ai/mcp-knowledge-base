@@ -1,0 +1,74 @@
+server_id = "mcp_knowledge_base"
+display_name = "Knowledge Base"
+version = "1.2.0"
+domain = "operations"
+sdk_version = "0.1.0"
+risk_level = "medium"
+writes_allowed = "gated"
+transports = ["stdio"]
+credentials = []
+governance_gates = []
+environments = ["development", "staging", "production"]
+
+[[tools]]
+name = "search_articles"
+description = "Search knowledge base with TF-IDF scoring, boosted by helpfulness"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = []
+
+[[tools]]
+name = "get_article"
+description = "Get full article by ID — body, version, owner, reviewer, freshness"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = []
+
+[[tools]]
+name = "find_related"
+description = "Find articles related to a given article by shared tags and category"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = []
+
+[[tools]]
+name = "create_draft"
+description = "Create a new article draft"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = []
+
+[[tools]]
+name = "suggest_update"
+description = "Suggest an update to an existing article — creates a new draft version"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = []
+
+[[tools]]
+name = "publish_article"
+description = "Publish a draft article — requires reviewer name"
+risk_class = "internal_write"
+requires_approval = true
+credential_bindings = []
+
+[[tools]]
+name = "record_feedback"
+description = "Record feedback on an article (helpful/not helpful)"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = []
+
+[[tools]]
+name = "list_articles"
+description = "List articles filtered by category and/or status"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = []
+
+[[tools]]
+name = "get_knowledge_gaps"
+description = "Get knowledge gaps — queries with no results, ranked by frequency"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = []

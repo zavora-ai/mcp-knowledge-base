@@ -3,6 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/mcp-knowledge-base.svg)](https://crates.io/crates/mcp-knowledge-base)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![ADK-Rust Enterprise](https://img.shields.io/badge/ADK--Rust-Enterprise-purple.svg)](https://enterprise.adk-rust.com)
+[![Registry Ready](https://img.shields.io/badge/ADK_Registry-Ready-green.svg)](https://www.zavora.ai)
 
 Enterprise knowledge base for [ADK-Rust Enterprise](https://enterprise.adk-rust.com) agents. 9 MCP tools for articles, TF-IDF search boosted by helpfulness, feedback loops, gap detection, versioning, and draft/publish workflow.
 
@@ -79,3 +80,12 @@ The ITSM MCP's `handle_support_request` can use this KB for resolution:
 ## License
 
 Apache-2.0 — Part of the [ADK-Rust Enterprise](https://enterprise.adk-rust.com) MCP server ecosystem.
+
+## Registry Compliance
+
+This server implements the [ADK MCP SDK](https://crates.io/crates/adk-mcp-sdk) contract:
+
+- **HealthCheck** — async health probe for registry monitoring
+- **mcp-server.toml** — manifest declaring tools, risk classes, and credentials
+- **Structured tracing** — `RUST_LOG` env-filter for observability
+
