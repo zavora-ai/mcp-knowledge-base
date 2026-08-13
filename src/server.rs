@@ -27,7 +27,7 @@ pub struct GetGapsInput { pub limit: Option<usize> }
 #[derive(Clone)]
 pub struct KbServer { pub store: Arc<KbStore> }
 
-#[tool_router(server_handler)]
+#[tool_router]
 impl KbServer {
     #[tool(description = "Search knowledge base with TF-IDF scoring. Boosted by helpfulness, penalized for staleness. Filters by category and audience. Tracks gaps on no results.")]
     fn search_articles(&self, Parameters(i): Parameters<SearchArticlesInput>) -> String {
@@ -121,4 +121,11 @@ impl HealthCheck for KbServer {
             latency_ms: Some(1),
         }
     }
+}
+
+adk_mcp_sdk::mcp_2026_server! {
+    server: KbServer,
+    task_tools: [],
+    approval_tools: ["publish_article"],
+    cache_ttl_ms: 60_000,
 }
