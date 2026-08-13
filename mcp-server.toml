@@ -2,73 +2,73 @@ server_id = "mcp_knowledge_base"
 display_name = "Knowledge Base"
 version = "1.2.0"
 domain = "operations"
-sdk_version = "0.1.0"
-risk_level = "medium"
+sdk_version = "0.2.0"
+risk_level = "high"
 writes_allowed = "gated"
 transports = ["stdio"]
 credentials = []
-governance_gates = []
+governance_gates = ["mrtr_approval"]
 environments = ["development", "staging", "production"]
 
 [[tools]]
 name = "search_articles"
-description = "Search knowledge base with TF-IDF scoring, boosted by helpfulness"
+description = "Search knowledge base with TF-IDF scoring. Boosted by helpfulness, penalized for staleness. Filters by category and audience. Tracks gaps on no results."
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = []
 
 [[tools]]
 name = "get_article"
-description = "Get full article by ID — body, version, owner, reviewer, freshness"
+description = "Get full article by ID — body, version, owner, reviewer, freshness, feedback stats. Increments view count."
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = []
 
 [[tools]]
-name = "find_related"
-description = "Find articles related to a given article by shared tags and category"
+name = "list_related_articles"
+description = "Find articles related to a given article by shared tags and category."
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = []
 
 [[tools]]
-name = "create_draft"
-description = "Create a new article draft"
-risk_class = "internal_write"
+name = "create_article_draft"
+description = "Create a new article draft. Requires author. Must be published separately (requires reviewer approval)."
+risk_class = "external_write"
 requires_approval = false
 credential_bindings = []
 
 [[tools]]
-name = "suggest_update"
-description = "Suggest an update to an existing article — creates a new draft version"
-risk_class = "internal_write"
+name = "suggest_article_update"
+description = "Suggest an update to an existing article. Creates a NEW draft version — does not mutate published content. Requires author."
+risk_class = "external_write"
 requires_approval = false
 credential_bindings = []
 
 [[tools]]
 name = "publish_article"
-description = "Publish a draft article — requires reviewer name"
+description = "Publish a draft article. HIGH GOVERNANCE: requires reviewer name. Makes article searchable and authoritative."
 risk_class = "internal_write"
 requires_approval = true
 credential_bindings = []
 
 [[tools]]
-name = "record_feedback"
-description = "Record feedback on an article (helpful/not helpful)"
+name = "record_article_feedback"
+description = "Record feedback on an article (helpful/not helpful). Affects search ranking. Include ticket_id for traceability."
 risk_class = "internal_write"
 requires_approval = false
 credential_bindings = []
 
 [[tools]]
 name = "list_articles"
-description = "List articles filtered by category and/or status"
+description = "List articles filtered by category and/or status (draft/published/archived/deprecated)."
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = []
 
 [[tools]]
-name = "get_knowledge_gaps"
-description = "Get knowledge gaps — queries with no results, ranked by frequency"
+name = "get_article_gaps"
+description = "Get knowledge gaps — queries with no results, ranked by frequency. Shows what articles need to be written."
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = []
